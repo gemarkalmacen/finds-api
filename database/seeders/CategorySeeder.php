@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\CategorySeeder;
+use App\Models\Category;
 
-class DatabaseSeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -14,6 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CategorySeeder::class);
+        \App\Models\Category::factory()->count(30)->create(); 
     }
 }
