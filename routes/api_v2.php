@@ -2,11 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\CategoryController;
+use App\Http\Controllers\Api\V2\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| API V2 Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
