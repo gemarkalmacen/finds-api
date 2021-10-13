@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\V1\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +22,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // Route::get('categories', 'App\Http\Controllers\Api\CategoryController@index');
 Route::get('categories', [CategoryController::class, 'index']);
 Route::get('categories/{category}', [CategoryController::class, 'show']);
+
+// Route::group([
+//     'prefix' => 'v1', 
+//     'as' => 'api.', 
+//     'namespace' => 'Api\V1\Admin', 
+//     'middleware' => ['auth:api']
+// ], function () {
+//     Route::apiResource('projects', 'ProjectsApiController');
+// });
