@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V2;
+namespace App\Http\Controllers\Api\V1\Staff\Categories;
 
 use App\Models\Category;
 use App\Http\Resources\CategoryResource;
@@ -11,7 +11,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('id', '<', 3)->get();
+        $categories = Category::all();
         return CategoryResource::collection($categories);
     }
 
