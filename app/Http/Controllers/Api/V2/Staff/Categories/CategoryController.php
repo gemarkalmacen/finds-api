@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V2;
+namespace App\Http\Controllers\Api\V2\Staff\Categories;
 
 use App\Models\Category;
 use App\Http\Resources\CategoryResource;
