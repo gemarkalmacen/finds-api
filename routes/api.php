@@ -18,6 +18,6 @@ Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {
     include('v1/api-staff.php');
 });
 
-// Route::group(['namespace' => 'Api\V2', 'prefix' => 'v2'], function() {        
-//     include('v2/api-staff.php');
-// });
+Route::group(['namespace' => 'Api\V2', 'prefix' => 'v2'], function() {        
+    include('v2/api-staff.php');
+});
