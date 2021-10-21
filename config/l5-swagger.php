@@ -1,50 +1,107 @@
 <?php
+$host = env('L5_SWAGGER_CONST_HOST', config('app.url'));
+$sections = [
+    [
+        'versions' => [1],
+        'name' => 'staff',
+        'base' => 'staff',
+        'security' => [
+            ['staff' => '']
+        ]
+    ],
+    // [
+    //     'versions' => [1],
+    //     'name' => 'employee',
+    //     'base' => 'employee',
+    //     'security' => [
+    //         ['employee' => '']
+    //     ]
+    // ],       
+    // [
+    //     'versions' => [1],
+    //     'name' => 'employer',
+    //     'base' => 'employer',
+    //     'security' => [
+    //         ['employer' => '']
+    //     ]
+    // ],                                                 
+];
 
-return [
-    'default' => 'default',
-    'documentations' => [
-        'default' => [
-            'api' => [
-                'title' => 'L5 Swagger UI',
-            ],
-
+$documentations = [];
+foreach ($sections as $section) {
+    $versions = $section['versions'];
+    $base = !empty($section['base']) ? '/'.$section['base'] : '';
+    foreach ($versions as $version) {
+        $version = "v{$version}";
+        $key = "{$version}-{$section['name']}";
+        $annotations = base_path('app').'/Annotations/'.ucfirst($version).'/'.ucfirst($section['name']);
+        $documentations[$key] = [
             'routes' => [
-                /*
-                 * Route for accessing api documentation interface
-                */
+                'docs' => "docs/{$version}",
                 'api' => 'api/documentation',
             ],
             'paths' => [
+                'base' => "{$host}/api/{$version}{$base}",
+                'docs' => storage_path('api-docs')."/{$version}",
+                'docs_json' => "{$section['name']}.json",
+                'docs_yaml' => "{$section['name']}.yaml",
+                'annotations' => [
+                    $annotations
+                ],
+            ],
+            'securityDefinitions' => [
+                'security' => $section['security']
+            ]
+        ];
+    }
+}
+
+return [
+    'default' => 'v1-staff',
+    'documentations' => $documentations,
+    // 'documentations' => [
+    //     'default' => [
+    //         'api' => [
+    //             'title' => 'L5 Swagger UI',
+    //         ],
+
+    //         'routes' => [
+                /*
+                 * Route for accessing api documentation interface
+                */
+            //     'api' => 'api/documentation',
+            // ],
+            // 'paths' => [
                 /*
                  * Edit to include full URL in ui for assets
                 */
-                'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
+                // 'use_absolute_path' => env('L5_SWAGGER_USE_ABSOLUTE_PATH', true),
 
                 /*
                  * File name of the generated json documentation file
                 */
-                'docs_json' => 'api-docs.json',
+                // 'docs_json' => 'api-docs.json',
 
                 /*
                  * File name of the generated YAML documentation file
                 */
-                'docs_yaml' => 'api-docs.yaml',
+                // 'docs_yaml' => 'api-docs.yaml',
 
                 /*
                 * Set this to `json` or `yaml` to determine which documentation file to use in UI
                 */
-                'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
+                // 'format_to_use_for_docs' => env('L5_FORMAT_TO_USE_FOR_DOCS', 'json'),
 
                 /*
                  * Absolute paths to directory containing the swagger annotations are stored.
                 */
-                'annotations' => [
-                    base_path('app'),
-                ],
+                // 'annotations' => [
+                    // base_path('app'),
+                // ],
 
-            ],
-        ],
-    ],
+            // ],
+        // ],
+    // ],
     'defaults' => [
         'routes' => [
             /*
@@ -102,20 +159,20 @@ return [
             'excludes' => [],
         ],
 
-        'scanOptions' => [
+        // 'scanOptions' => [
             /**
              * analyser: defaults to \OpenApi\StaticAnalyser .
              *
              * @see \OpenApi\scan
              */
-            'analyser' => null,
+            // 'analyser' => null,
 
             /**
              * analysis: defaults to a new \OpenApi\Analysis .
              *
              * @see \OpenApi\scan
              */
-            'analysis' => null,
+            // 'analysis' => null,
 
             /**
              * Custom query path processors classes.
@@ -123,30 +180,52 @@ return [
              * @link https://github.com/zircote/swagger-php/tree/master/Examples/schema-query-parameter-processor
              * @see \OpenApi\scan
              */
-            'processors' => [
+            // 'processors' => [
                 // new \App\SwaggerProcessors\SchemaQueryParameter(),
-            ],
+            // ],
 
             /**
              * pattern: string       $pattern File pattern(s) to scan (default: *.php) .
              *
              * @see \OpenApi\scan
              */
-            'pattern' => null,
+            // 'pattern' => null,
 
             /*
              * Absolute path to directories that should be exclude from scanning
              * @note This option overwrites `paths.excludes`
              * @see \OpenApi\scan
             */
-            'exclude' => [],
-        ],
+            // 'exclude' => [],
+        // ],
 
         /*
          * API security definitions. Will be generated into documentation file.
         */
         'securityDefinitions' => [
             'securitySchemes' => [
+
+                // 'employer' => [ // Unique name of security
+                //     'type' => 'http',
+                //     'description' => 'Authentication of user manager',
+                //     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+                //     'scheme' => 'bearer',
+                // ],
+
+                // 'user' => [ // Unique name of security
+                //     'type' => 'http',
+                //     'description' => 'Authentication of user manager',
+                //     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+                //     'scheme' => 'bearer',
+                // ],
+
+                'staff' => [ // Unique name of security
+                    'type' => 'http',
+                    'description' => 'Authentication of staff',
+                    'in' => 'header', // The location of the API key. Valid values are "query" or "header".
+                    'scheme' => 'bearer',
+                ],
+
                 /*
                  * Examples of Security schemes
                 */
@@ -248,8 +327,8 @@ return [
         /*
          * Uncomment to add constants which can be used in annotations
          */
-        // 'constants' => [
-        // 'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
-        // ],
+        'constants' => [
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+        ],
     ],
 ];

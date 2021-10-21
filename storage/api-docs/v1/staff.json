@@ -1,0 +1,392 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "FINDS API Documentation for Staff",
+        "version": "1.0"
+    },
+    "servers": [
+        {
+            "url": "http://finds-api.test/api/v1/staff"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Login user",
+                "description": "Login user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "title": "Email",
+                                        "type": "string",
+                                        "example": "admin@admin.com"
+                                    },
+                                    "password": {
+                                        "title": "Password",
+                                        "type": "password",
+                                        "example": "password"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "example": "success"
+                                        },
+                                        "description": {
+                                            "example": "OK"
+                                        },
+                                        "token": {
+                                            "example": "nidO7z8fzHC7OuaN5buplq2cdXzCjzmh"
+                                        },
+                                        "data": {
+                                            "example": {
+                                                "id": 1,
+                                                "email": "admin@admin.com",
+                                                "mobile": "66842888686",
+                                                "user_details": {
+                                                    "first_name": "Alex",
+                                                    "middle_name": "John",
+                                                    "last_name": "Scalia"
+                                                },
+                                                "roles": {
+                                                    "id": 1,
+                                                    "name": "Administrator"
+                                                },
+                                                "user_settings": {
+                                                    "languages": {
+                                                        "id": 1,
+                                                        "code": "en"
+                                                    }
+                                                },
+                                                "created_at": "2020-12-03 15:55:22",
+                                                "updated_at": "2020-12-03 15:55:22",
+                                                "deleted_at": "2020-12-03 15:55:22"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Unauthorized",
+                                    "errors": [
+                                        {
+                                            "code": 5003,
+                                            "message": "Credentials invalid"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Forbidden",
+                                    "errors": {
+                                        "code": 5004,
+                                        "message": "User inactive"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entry",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Unprocessable Entry",
+                                    "errors": [
+                                        {
+                                            "field": "email",
+                                            "code": 5001,
+                                            "message": "Email required"
+                                        },
+                                        {
+                                            "field": "password",
+                                            "code": 5002,
+                                            "message": "Password required"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/logout": {
+            "get": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Logout user",
+                "description": "Logout authenticated user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "success",
+                                    "description": "OK"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Unauthorized"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "staff": []
+                    }
+                ]
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Get city",
+                "description": "Get category",
+                "parameters": [
+                    {
+                        "name": "filter[name]",
+                        "in": "query",
+                        "description": "Search name",
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "filter[id]",
+                        "in": "query",
+                        "description": "Search id",
+                        "schema": {
+                            "type": "integer",
+                            "example": ""
+                        }
+                    },
+                    {
+                        "name": "sort[direction]",
+                        "in": "query",
+                        "description": "Sort direction",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ],
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "success",
+                                    "description": "OK",
+                                    "data": [
+                                        {
+                                            "id": 1,
+                                            "name": "City name",
+                                            "created_at": "2021-12-03 15:55:22",
+                                            "updated_at": "2021-12-03 15:55:22"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Unauthorized",
+                                    "errors": [
+                                        {
+                                            "code": 5045,
+                                            "message": "Permissions insufficient"
+                                        },
+                                        {
+                                            "code": 5004,
+                                            "message": "User inactive"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "staff": []
+                    }
+                ]
+            }
+        },
+        "/categories/{category}": {
+            "get": {
+                "tags": [
+                    "Categories"
+                ],
+                "summary": "Show city",
+                "description": "Show category",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "success",
+                                    "description": "OK",
+                                    "data": {
+                                        "id": 1,
+                                        "name": "category",
+                                        "created_at": "2021-12-03 15:55:22",
+                                        "updated_at": "2021-12-03 15:55:22"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Not Found"
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Forbidden",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "status": "error",
+                                    "description": "Unauthorized",
+                                    "errors": [
+                                        {
+                                            "code": 5045,
+                                            "message": "Permissions insufficient"
+                                        },
+                                        {
+                                            "code": 5004,
+                                            "message": "User inactive"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "staff": []
+                    }
+                ]
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Authentication",
+            "description": "Authentication endpoints of staff"
+        },
+        {
+            "name": "Categories",
+            "description": "Categories endpoints of staff"
+        },
+        {
+            "name": "Me",
+            "description": ""
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "staff": {
+                "type": "http",
+                "description": "Authentication of staff",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "security": [
+        {
+            "staff": ""
+        }
+    ]
+}
