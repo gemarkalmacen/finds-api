@@ -2,11 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\V1\Staff\Categories\CategoryController;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
-| API V2 Routes
+| API V1 Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -15,14 +16,18 @@ use App\Http\Controllers\Api\V1\Staff\Categories\CategoryController;
 |
 */
 
+// Route::group(['namespace' => 'Categories'], function () {
+//     Route::apiResource('/categories', 'CategoryController');
+// });
+
 Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
     // Route::post('login', 'AuthController@login');
     Route::group(
         [
-            'middleware' => [
+            // 'middleware' => [
                 // 'auth:sanctum',
-                'staff',
-            ]
+                // 'staff',
+            // ]
         ],
         function() {
             Route::group(['namespace' => 'Categories'], function () {
@@ -30,4 +35,7 @@ Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
             });
         }
     );
+
 });
+
+// Route::post('login', [ 'as' => 'login', 'uses' => 'LoginController@do']);
