@@ -24,10 +24,11 @@ Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
     // Route::post('login', 'AuthController@login');
     Route::group(
         [
-            // 'middleware' => [
+            'middleware' => [
                 // 'auth:sanctum',
                 // 'staff',
-            // ]
+                'auth:sanctum',
+            ]
         ],
         function() {
             Route::group(['namespace' => 'Categories'], function () {
