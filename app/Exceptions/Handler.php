@@ -66,7 +66,7 @@ class Handler extends ExceptionHandler
                 ]
             ], 401);
         }
-                
+        
         // This is the default
         return $request->expectsJson()
             ? response()->json([
