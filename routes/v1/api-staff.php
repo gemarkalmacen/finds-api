@@ -25,9 +25,8 @@ Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
     Route::group(
         [
             'middleware' => [
-                // 'auth:sanctum',
-                // 'staff',
                 'auth:sanctum',
+                // 'staff',
             ]
         ],
         function() {
@@ -37,6 +36,7 @@ Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
         }
     );
 
+    
+    Route::post('/auth/login', 'AuthController@login');
+    Route::post('/auth/register', 'AuthController@register');
 });
-
-// Route::post('login', [ 'as' => 'login', 'uses' => 'LoginController@do']);

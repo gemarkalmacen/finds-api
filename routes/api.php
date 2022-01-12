@@ -17,51 +17,6 @@ use Illuminate\Validation\ValidationException;
 
 Route::group(['namespace' => 'Api\V1', 'prefix' => 'v1'], function() {        
     include('v1/api-staff.php');
-
-    
-    // Route::post('/sanctum/token', function (Request $request){
-    //     // $request->validate([
-    //     //     'email' => 'required|email',
-    //     //     'password' => 'required',
-    //     //     'device_name' => 'required',
-    //     // ]);
-
-    //     // $user = \App\Models\User::where('email', $request->email)->first();
-
-    //     return 'asdasdasdasd';
-
-    //     return $request;
-
-    //     // if(! $user || ! Hash::check($request->password, $user->password)){
-    //     //     throw ValidationException::withMessages([
-    //     //         'email' => ['The provided credentials are incorrect.'],
-    //     //     ]);
-    //     // }
-    
-    //     // return $user->createToken($request->device_name)->plainTextToken;
-    // });
-});
-
-Route::post('/sanctum/token', function (Request $request){
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-        'device_name' => 'required',
-    ]);
-    
-    $user = \App\Models\User::where('email', $request->email)->first();
-
-    // return 'asdasdasdasd';
-
-    // return $request;
-
-    // if(! $user || ! Hash::check($request->password, $user->password)){
-    //     throw ValidationException::withMessages([
-    //         'email' => ['The provided credentials are incorrect.'],
-    //     ]);
-    // }
-    
-    return $user->createToken($request->device_name)->plainTextToken;
 });
 
 // Route::group(['namespace' => 'Api\V2', 'prefix' => 'v2'], function() {        
