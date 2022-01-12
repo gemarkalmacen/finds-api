@@ -43,6 +43,7 @@ class UserLoginRequest extends FormRequest
         ];
     }
     
+    /*
     protected function failedValidation(Validator $validator) {
         $codeList = $this->customeCode();        
         foreach( $validator->errors()->get('*') as $key => $fieldError) {              
@@ -63,8 +64,9 @@ class UserLoginRequest extends FormRequest
             'errors' => $errors,
           ], 422)
         ); 
-    }
+    } */
 
+    /*
     protected function customeCode(){        
         $code = [
             4011 => __('staff/validations.bank_required'),
@@ -76,5 +78,5 @@ class UserLoginRequest extends FormRequest
         //     return \Illuminate\Support\Str::slug($q); 
         // },$code);
         return $code;
-    }       
+    }*/
 }
