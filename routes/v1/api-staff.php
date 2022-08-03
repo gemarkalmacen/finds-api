@@ -37,6 +37,8 @@ Route::group(['prefix' => 'staff', 'namespace' => 'Staff'], function() {
     );
 
     
+    Route::get('/auth/user', 'AuthController@user');
     Route::post('/auth/login', 'AuthController@login');
+    Route::get('/auth/logout', 'AuthController@logout');
     Route::post('/auth/register', 'AuthController@register');
 });

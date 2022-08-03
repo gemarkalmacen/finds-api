@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -21,7 +22,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
     ];
@@ -37,6 +38,13 @@ class User extends Authenticatable
     ];
 
     /**
+     * Login responses
+     */
+    const LOGIN_SUCCESS = 1;
+    const LOGIN_BAD_CREDENTIALS = 2;
+    const LOGIN_INACTIVE = 3;
+
+    /**
      * The attributes that should be cast to native types.
      *
      * @var array
@@ -44,4 +52,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function detail(): HasOne
+    {
+        return $this->hasOne(UserDetail::class);
+    }
 }

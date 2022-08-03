@@ -27,7 +27,7 @@ class UserLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
+            'username' => 'required',
             'password' => 'required'
         ];
     }
@@ -38,8 +38,8 @@ class UserLoginRequest extends FormRequest
     public function messages()
     {
         return[
-            'email.required' => __('staff/validation.email_required'),
-            'password.required' => __('staff/validation.password_required'),                        
+            'username.required' => __('staff/validations.username_required'),
+            'password.required' => __('staff/validations.password_required'),                        
         ];
     }
     

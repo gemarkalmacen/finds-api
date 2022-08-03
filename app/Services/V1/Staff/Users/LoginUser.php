@@ -47,6 +47,14 @@ class LoginUser
         //     return false;
         // }
 
+        // Attempt
+        if (!auth('users')->attempt($param)) {
+            // Event here
+            return User::LOGIN_BAD_CREDENTIALS;
+        }
+        
+        
+
         // Get client info
         $type = 'mobile';
         $device = request()->device_name;
